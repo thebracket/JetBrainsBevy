@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/ex03_crab_stars/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ex04_physics/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ex05_particles/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ex06_3d/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>

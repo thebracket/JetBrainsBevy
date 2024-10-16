@@ -9,7 +9,7 @@ edition = "2021"
 members = [
     "ex01_hello_bevy",
     "ex02_moving_crab"
-, "ex03_crab_stars", "ex04_physics", "ex05_particles"]
+, "ex03_crab_stars", "ex04_physics", "ex05_particles", "ex06_3d"]
 
 [workspace.dependencies]
 bevy = "0.14.2"
