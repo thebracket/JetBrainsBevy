@@ -23,38 +23,42 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
 
     // Spawn Ferris
-    commands.spawn(SpriteBundle {
-        // Choose the texture
-        texture: asset_server.load("ferris.png"),
-        // Place Ferris on the map
-        transform: Transform {
-            translation: Vec3::new(0.0, 0.0, 0.0),
-            ..Default::default()
-        },
-        ..default()
-    }).insert(Ferris); // And tag him as Ferris
+    commands
+        .spawn(SpriteBundle {
+            // Choose the texture
+            texture: asset_server.load("ferris.png"),
+            // Place Ferris on the map
+            transform: Transform {
+                translation: Vec3::new(0.0, 0.0, 0.0),
+                ..Default::default()
+            },
+            ..default()
+        })
+        .insert(Ferris); // And tag him as Ferris
 
     // Spawn some stars
     for n in 0..36 {
         let angle = n as f32 * std::f32::consts::PI / 18.0;
         let x = angle.cos() * 300.0;
         let y = angle.sin() * 300.0;
-        commands.spawn(SpriteBundle {
-            // Choose the texture
-            texture: rust_star.clone(),
-            // Place Ferris on the map
-            transform: Transform {
-                translation: Vec3::new(x, y, -1.0),
-                ..Default::default()
-            },
-            ..default()
-        }).insert(Star(n as f32)); // And tag him as Ferris
+        commands
+            .spawn(SpriteBundle {
+                // Choose the texture
+                texture: rust_star.clone(),
+                // Place Ferris on the map
+                transform: Transform {
+                    translation: Vec3::new(x, y, -1.0),
+                    ..Default::default()
+                },
+                ..default()
+            })
+            .insert(Star(n as f32)); // And tag him as Ferris
     }
 }
 
 fn move_crab(
     mut player_query: Query<&mut Transform, With<Ferris>>,
-    mut char_input_events: EventReader<KeyboardInput>
+    mut char_input_events: EventReader<KeyboardInput>,
 ) {
     let mut offset = Vec3::ZERO;
     for event in char_input_events.read() {
@@ -81,12 +85,9 @@ fn move_crab(
 
 fn move_stars(
     player_query: Query<&Transform, With<Ferris>>,
-    mut star_query: Query<(&mut Star, &mut Transform), Without<Ferris>>
+    mut star_query: Query<(&mut Star, &mut Transform), Without<Ferris>>,
 ) {
-    let player_pos = player_query
-        .get_single()
-        .unwrap()
-        .translation;
+    let player_pos = player_query.get_single().unwrap().translation;
 
     for (mut star, mut transform) in star_query.iter_mut() {
         // Figure out where we want to be

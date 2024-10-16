@@ -46,10 +46,11 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         .insert(TransformBundle::from(Transform::from_xyz(150.0, 10.0, 0.0)));
 
     // Create Ferris
-    commands.spawn(SpriteBundle {
-        texture: asset_server.load("ferris.png"),
-        ..default()
-    })
+    commands
+        .spawn(SpriteBundle {
+            texture: asset_server.load("ferris.png"),
+            ..default()
+        })
         .insert(RigidBody::Dynamic)
         .insert(Collider::round_cuboid(25.0, 25.0, 5.0))
         .insert(Restitution::coefficient(0.7))
@@ -59,7 +60,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 
 fn move_crab(
     mut player_query: Query<&mut Velocity, With<Ferris>>,
-    mut char_input_events: EventReader<KeyboardInput>
+    mut char_input_events: EventReader<KeyboardInput>,
 ) {
     let mut offset = Vect::ZERO;
     for event in char_input_events.read() {

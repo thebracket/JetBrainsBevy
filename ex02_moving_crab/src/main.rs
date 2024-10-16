@@ -14,21 +14,23 @@ fn main() {
 
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2dBundle::default());
-    commands.spawn(SpriteBundle {
-        // Choose the texture
-        texture: asset_server.load("ferris.png"),
-        // Place Ferris on the map
-        transform: Transform {
-            translation: Vec3::new(0.0, 0.0, 0.0),
-            ..Default::default()
-        },
-        ..default()
-    }).insert(Ferris); // And tag him as Ferris
+    commands
+        .spawn(SpriteBundle {
+            // Choose the texture
+            texture: asset_server.load("ferris.png"),
+            // Place Ferris on the map
+            transform: Transform {
+                translation: Vec3::new(0.0, 0.0, 0.0),
+                ..Default::default()
+            },
+            ..default()
+        })
+        .insert(Ferris); // And tag him as Ferris
 }
 
 fn move_crab(
     mut player_query: Query<&mut Transform, With<Ferris>>,
-    mut char_input_events: EventReader<KeyboardInput>
+    mut char_input_events: EventReader<KeyboardInput>,
 ) {
     let mut offset = Vec3::ZERO;
     for event in char_input_events.read() {

@@ -1,7 +1,7 @@
 use bevy::input::keyboard::KeyboardInput;
 use bevy::prelude::*;
-use bevy_rapier2d::prelude::*;
 use bevy_hanabi::prelude::*;
+use bevy_rapier2d::prelude::*;
 
 #[derive(Component)]
 struct Ferris;
@@ -59,10 +59,11 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         .insert(TransformBundle::from(Transform::from_xyz(150.0, 10.0, 0.0)));
 
     // Create Ferris
-    commands.spawn(SpriteBundle {
-        texture: asset_server.load("ferris.png"),
-        ..default()
-    })
+    commands
+        .spawn(SpriteBundle {
+            texture: asset_server.load("ferris.png"),
+            ..default()
+        })
         .insert(RigidBody::Dynamic)
         .insert(Collider::round_cuboid(25.0, 25.0, 5.0))
         .insert(Restitution::coefficient(0.7))
@@ -83,7 +84,7 @@ fn move_crab(
             KeyCode::KeyW => {
                 offset.y += 500.0;
                 thruster.send(ThrusterFired(player_transform.translation));
-            },
+            }
             KeyCode::KeyA => offset.x -= 100.0,
             KeyCode::KeyD => offset.x += 100.0,
             _ => {}
@@ -98,10 +99,7 @@ fn move_crab(
     player_velocity.linvel = offset;
 }
 
-fn setup_particles(
-    mut effects: ResMut<Assets<EffectAsset>>,
-    mut commands: Commands,
-) {
+fn setup_particles(mut effects: ResMut<Assets<EffectAsset>>, mut commands: Commands) {
     let mut gradient = Gradient::new();
     gradient.add_key(0.0, Vec4::new(1., 1., 0., 1.));
     gradient.add_key(1.0, Vec4::splat(0.));
@@ -128,8 +126,7 @@ fn setup_particles(
     // the time for which it's simulated and rendered. This modifier
     // is almost always required, otherwise the particles won't show.
     let lifetime = module.lit(3.0); // literal value "10.0"
-    let init_lifetime = SetAttributeModifier::new(
-        Attribute::LIFETIME, lifetime);
+    let init_lifetime = SetAttributeModifier::new(Attribute::LIFETIME, lifetime);
 
     // Every frame, add a gravity-like acceleration downward
     let accel = module.lit(Vec3::new(0., -3., 0.));
@@ -142,21 +139,23 @@ fn setup_particles(
         // Spawn at a rate of 5 particles per second
         Spawner::rate(5.0.into()),
         // Move the expression module into the asset
-        module
+        module,
     )
-        .with_name("MyEffect")
-        .init(init_pos)
-        .init(init_vel)
-        .init(init_lifetime)
-        .update(update_accel)
-        // Render the particles with a color gradient over their
-        // lifetime. This maps the gradient key 0 to the particle spawn
-        // time, and the gradient key 1 to the particle death (10s).
-        .render(ColorOverLifetimeModifier { gradient });
+    .with_name("MyEffect")
+    .init(init_pos)
+    .init(init_vel)
+    .init(init_lifetime)
+    .update(update_accel)
+    // Render the particles with a color gradient over their
+    // lifetime. This maps the gradient key 0 to the particle spawn
+    // time, and the gradient key 1 to the particle death (10s).
+    .render(ColorOverLifetimeModifier { gradient });
 
     // Insert into the asset system
     let effect_handle = effects.add(effect);
-    commands.insert_resource(ParticleEffects { effect: effect_handle });
+    commands.insert_resource(ParticleEffects {
+        effect: effect_handle,
+    });
 }
 
 #[derive(Component)]
@@ -174,7 +173,8 @@ fn fire_thrusters(
                 effect: ParticleEffect::new(effects.effect.clone()),
                 transform: Transform::from_translation(event.0),
                 ..Default::default()
-            }).insert(ParticleBurst(3.0));
+            })
+            .insert(ParticleBurst(3.0));
     }
 }
 
