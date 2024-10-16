@@ -1,0 +1,7 @@
+[package]
+name = "ex03_crab_stars"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = { workspace = true }

@@ -1,0 +1,17 @@
+[package]
+name = "jetbrains_bevy"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[workspace]
+members = [
+    "ex01_hello_bevy",
+    "ex02_moving_crab"
+, "ex03_crab_stars", "ex04_physics", "ex05_particles"]
+
+[workspace.dependencies]
+bevy = "0.14.2"
+bevy_rapier2d = { version = "0.27.0" , features = ["debug-render-2d", "simd-stable"] }
+bevy_hanabi = "0.12.2"

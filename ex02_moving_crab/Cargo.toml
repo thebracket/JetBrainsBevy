@@ -1,0 +1,7 @@
+[package]
+name = "ex02_moving_crab"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = { workspace = true }
